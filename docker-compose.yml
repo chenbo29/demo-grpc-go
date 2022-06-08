@@ -1,0 +1,10 @@
+version: "3.0"
+services:
+  rpc:
+    build:
+      context: .
+    command: "go run greeter_server/main.go"
+    volumes:
+      - type: bind
+        source: .
+        target: /data
