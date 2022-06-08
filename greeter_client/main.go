@@ -46,7 +46,12 @@ func main() {
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
-	defer conn.Close()
+	defer func(conn *grpc.ClientConn) {
+		err := conn.Close()
+		if err != nil {
+			log.Fatalf("conn close err: %v", err)
+		}
+	}(conn)
 	c := pb.NewGreeterClient(conn)
 
 	// Contact the server and print out its response.
@@ -57,4 +62,9 @@ func main() {
 		log.Fatalf("could not greet: %v", err)
 	}
 	log.Printf("Greeting: %s", r.GetMessage())
+	r, err = c.SayHelloAgain(ctx, &pb.HelloRequest{Name: *name})
+	if err != nil {
+		log.Fatalf("could not greet: %v", err)
+	}
+	log.Printf("Greeting Again: %s", r.GetMessage())
 }
