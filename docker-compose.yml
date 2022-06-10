@@ -4,6 +4,8 @@ services:
     build:
       context: .
     command: "go run greeter_server/main.go"
+    ports:
+      - "6010:50051"
     volumes:
       - type: bind
         source: .
