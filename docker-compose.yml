@@ -3,7 +3,7 @@ services:
   rpc:
     build:
       context: .
-    command: "go run greeter_server/main.go"
+    command: "go run grpc/main.go"
     ports:
       - "6010:50051"
     volumes:
