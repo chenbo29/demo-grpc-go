@@ -35,7 +35,7 @@ const (
 )
 
 var (
-	addr = flag.String("addr", "rpc:50051", "the address to connect to")
+	addr = flag.String("addr", "127.0.0.1:50051", "the address to connect to")
 	name = flag.String("name", defaultName, "Name to greet")
 )
 
@@ -62,9 +62,4 @@ func main() {
 		log.Fatalf("could not greet: %v", err)
 	}
 	log.Printf("Greeting: %s", r.GetMessage())
-	r, err = c.SayHelloAgain(ctx, &pb.HelloRequest{Name: *name})
-	if err != nil {
-		log.Fatalf("could not greet: %v", err)
-	}
-	log.Printf("Greeting Again: %s", r.GetMessage())
 }
