@@ -13,12 +13,8 @@
 ## compile .proto files
 
 ```shell
-protoc --go_out=. --go_opt=paths=source_relative \ 
---go-grpc_out=. --go-grpc_opt=paths=source_relative \
-helloworld/helloworld.proto
-
 protoc --go_out=. --go_opt=paths=source_relative \
     --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-    protos/helloworld/helloworld.proto
+    protos/finance/finance.proto
 
 ```

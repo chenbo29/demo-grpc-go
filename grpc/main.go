@@ -26,7 +26,8 @@ import (
 	"log"
 	"net"
 
-	pb "demo/protos/helloworld"
+	finance "demo/protos/finance"
+	helloworld "demo/protos/helloworld"
 	"google.golang.org/grpc"
 )
 
@@ -36,13 +37,25 @@ var (
 
 // server is used to implement helloworld.GreeterServer.
 type server struct {
-	pb.UnimplementedGreeterServer
+	helloworld.UnimplementedGreeterServer
+	finance.UnimplementedOrderServer
 }
 
 // SayHello implements helloworld.GreeterServer
-func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
+func (s *server) SayHello(ctx context.Context, in *helloworld.HelloRequest) (*helloworld.HelloReply, error) {
 	log.Printf("Received: %v", in.GetName())
-	return &pb.HelloReply{Message: "Hello " + in.GetName() + "[demo-grpc-go]"}, nil
+	return &helloworld.HelloReply{Message: "Hello " + in.GetName() + "[demo-grpc-go]"}, nil
+}
+
+func (s *server) Generate(ctx context.Context, in *finance.OrderRequest) (*finance.OrderResponse, error) {
+	log.Printf("Received Order: type[%v] number[%v]", in.GetType(), in.GetNumber())
+	return &finance.OrderResponse{
+		Alipay: &finance.Alipay{Url: "aplipay url"},
+		Wechat: &finance.Wechat{
+			Config: &finance.WechatConfig{AppId: "app id", Noncestr: "nonce str", Signature: "signature", JsapiTicket: "jsapi ticket"},
+			Pay:    &finance.WechatPay{AppId: "app id", Noncestr: "nonce str", Sign: "saeodlkejwo", SignType: "RSA", TimeStamp: 123312},
+		},
+	}, nil
 }
 
 func main() {
@@ -52,7 +65,11 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterGreeterServer(s, &server{})
+	server := &server{}
+
+	helloworld.RegisterGreeterServer(s, server)
+	finance.RegisterOrderServer(s, server)
+
 	log.Printf("server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)

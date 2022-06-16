@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+option go_package = "protos/finance";
+
+package finance;
+
+service Order {
+  rpc Generate (OrderRequest) returns (OrderResponse) {}
+}
+
+message OrderRequest {
+  string type = 1;
+  string number = 2;
+  string payer = 3;
+  string method = 4;
+  string url = 5;
+  float amount = 6;
+}
+
+message OrderResponse {
+  Alipay alipay = 1;
+  Wechat wechat = 2;
+}
+
+message Alipay {
+  string url = 1;
+}
+
+message Wechat {
+  WechatConfig config = 1;
+  WechatPay pay = 2;
+}
+
+message WechatConfig {
+  string jsapi_ticket = 1;
+  string signature = 2;
+  string app_id = 3;
+  string noncestr = 4;
+}
+
+message WechatPay {
+  int32 timeStamp = 1;
+  string package = 2;
+  string sign = 3;
+  string sign_type = 4;
+  string app_id = 5;
+  string noncestr = 6;
+}
+
