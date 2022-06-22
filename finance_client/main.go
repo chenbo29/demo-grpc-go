@@ -22,6 +22,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"log"
 	"time"
 
@@ -59,8 +60,9 @@ func main() {
 	defer cancel()
 	r, err := c.Generate(ctx, &pb.OrderRequest{Type: *name, Number: "xx-number", Payer: "ynwa", Method: "alipay", Amount: 99.9, Url: "url path"})
 	if err != nil {
+		fmt.Println(fmt.Sprintf("could not greet2: %v", *name))
 		log.Fatalf("could not greet: %v", err)
 	}
-	log.Printf("Finance: Alipay %s", r.GetAlipay().Url)
-	log.Printf("Finance: Wechat %s %s", r.GetWechat().Config.Signature, r.GetWechat().Pay.SignType)
+	log.Printf("Finance: Alipay %s", r.GetAlipay())
+	log.Printf("Finance: Wxpay %s", r.GetWxpay())
 }

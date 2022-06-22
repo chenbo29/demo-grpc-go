@@ -19,14 +19,14 @@ message OrderRequest {
 
 message OrderResponse {
   Alipay alipay = 1;
-  Wechat wechat = 2;
+  Wxpay wxpay = 2;
 }
 
 message Alipay {
   string url = 1;
 }
 
-message Wechat {
+message Wxpay {
   WechatConfig config = 1;
   WechatPay pay = 2;
 }
@@ -35,7 +35,7 @@ message WechatConfig {
   string jsapi_ticket = 1;
   string signature = 2;
   string app_id = 3;
-  string noncestr = 4;
+  string nonce_str = 4;
 }
 
 message WechatPay {
@@ -44,6 +44,5 @@ message WechatPay {
   string sign = 3;
   string sign_type = 4;
   string app_id = 5;
-  string noncestr = 6;
+  string nonce_str = 6;
 }
-
