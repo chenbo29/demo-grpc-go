@@ -51,9 +51,9 @@ func (s *server) Generate(ctx context.Context, in *finance.OrderRequest) (*finan
 	log.Printf("Received Order: type[%v] number[%v]", in.GetType(), in.GetNumber())
 	return &finance.OrderResponse{
 		Alipay: &finance.Alipay{Url: "aplipay url"},
-		Wechat: &finance.Wechat{
-			Config: &finance.WechatConfig{AppId: "app id", Noncestr: "nonce str", Signature: "signature", JsapiTicket: "jsapi ticket"},
-			Pay:    &finance.WechatPay{AppId: "app id", Noncestr: "nonce str", Sign: "saeodlkejwo", SignType: "RSA", TimeStamp: 123312},
+		Wxpay: &finance.Wxpay{
+			Config: &finance.WechatConfig{AppId: "app id", NonceStr: "nonce str", Signature: "signature", JsapiTicket: "jsapi ticket"},
+			Pay:    &finance.WechatPay{AppId: "app id", NonceStr: "nonce str", Sign: "saeodlkejwo", SignType: "RSA", TimeStamp: 123312},
 		},
 	}, nil
 }

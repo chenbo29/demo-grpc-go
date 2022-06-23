@@ -58,7 +58,7 @@ func main() {
 	// Contact the server and print out its response.
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := c.Generate(ctx, &pb.OrderRequest{Type: *name, Number: "xx-number", Payer: "ynwa", Method: "wxpay", Amount: 999, Url: "url path"})
+	r, err := c.Generate(ctx, &pb.OrderRequest{Type: *name, Number: "xx-number", Payer: "ynwa", Method: "wxpay", Amount: 999, Url: "http://baidu.com"})
 	if err != nil {
 		fmt.Println(fmt.Sprintf("could not greet2: %v", *name))
 		log.Fatalf("could not greet: %v", err)
